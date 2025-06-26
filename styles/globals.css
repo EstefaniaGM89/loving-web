@@ -22,6 +22,10 @@
   .animate-float-up {
     animation: floatUp 1.2s ease-in-out forwards;
   }
+
+  .cursor-blink {
+    animation: blinkCursor 1s step-start infinite;
+  }
 }
 
 /* Animaciones personalizadas */
@@ -49,6 +53,15 @@
   }
   100% {
     transform: translateY(-80px) scale(1.2);
+    opacity: 0;
+  }
+}
+
+@keyframes blinkCursor {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
     opacity: 0;
   }
 }
