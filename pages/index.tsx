@@ -1,15 +1,17 @@
 import Carousel from '../components/Carousel';
 import HeartWithFirework from '../components/HeartWithFirework';
+import SpotifyPlayer from '../components/SpotifyPlayer';
 import { useEffect, useState } from "react";
 
-const clientId = "dd153b1d6ca844a5a11db40416c28c67"; // Pon aquí tu Client ID
-const redirectUri = "https://loving-web-psi.vercel.app/callback";
+const clientId = "dd153b1d6ca844a5a11db40416c28c67"; // Correcto: cadena entre comillas
+const redirectUri = "https://loving-web-psi.vercel.app/callback"; // Exactamente igual que en Spotify Dashboard
 const scopes = [
   "streaming",
   "user-read-email",
   "user-read-private",
   "user-modify-playback-state",
   "user-read-playback-state",
+  "playlist-modify-private",
 ];
 
 const getSpotifyAuthUrl = () => {
@@ -21,44 +23,36 @@ const getSpotifyAuthUrl = () => {
 export default function Home() {
   const [showMessage, setShowMessage] = useState(false);
   const [showMore, setShowMore] = useState(false);
-  const [timeTogether, setTimeTogether] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0
-  });
+  const [timeTogether, setTimeTogether] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+
+  const token = typeof window !== "undefined" ? localStorage.getItem("spotify_access_token") : null;
 
   useEffect(() => {
     const startDate = new Date("2024-07-29T00:00:00");
-
     const updateTime = () => {
       const now = new Date();
       const diff = now.getTime() - startDate.getTime();
-
       const totalSeconds = Math.floor(diff / 1000);
       const days = Math.floor(totalSeconds / (60 * 60 * 24));
       const hours = Math.floor((totalSeconds % (60 * 60 * 24)) / 3600);
       const minutes = Math.floor((totalSeconds % 3600) / 60);
       const seconds = totalSeconds % 60;
-
       setTimeTogether({ days, hours, minutes, seconds });
     };
-
     updateTime();
     const interval = setInterval(updateTime, 1000);
-
     return () => clearInterval(interval);
   }, []);
 
-  // Solo mostrar botón Spotify si no hay token guardado
-  const token = typeof window !== "undefined" ? localStorage.getItem("spotify_access_token") : null;
+  const handleLogout = () => {
+    localStorage.removeItem("spotify_access_token");
+    window.location.reload();
+  };
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-blue-300 via-purple-300 to-pink-300 flex flex-col items-center justify-center px-6 py-12 text-center">
       <div className="bg-white/70 backdrop-blur-md shadow-2xl rounded-3xl p-8 max-w-2xl w-full border border-white/30">
-        <h1 className="text-4xl font-extrabold text-gray-800 mb-2">
-          Nuestra Reacción Perfecta 💘🔬
-        </h1>
+        <h1 className="text-4xl font-extrabold text-gray-800 mb-2">Nuestra Reacción Perfecta 💘🔬</h1>
         <p className="text-xl font-semibold text-pink-700">Estefanía y Miguel</p>
         <p className="text-lg text-purple-900 font-medium mt-2">
           Llevamos <span className="font-bold">{timeTogether.days}</span> días juntos 💞
@@ -78,10 +72,23 @@ export default function Home() {
 
         {!token && (
           <button
-            onClick={() => (window.location.href = getSpotifyAuthUrl())}
-            className="ml-4 mt-8 bg-green-600 hover:bg-green-500 text-white font-bold py-3 px-6 rounded-full shadow-lg transition-all duration-300 ease-in-out text-lg"
+            onClick={() => {
+              const url = getSpotifyAuthUrl();
+              console.log("Redirigiendo a Spotify con URL:", url);
+              window.location.href = url;
+            }}
+            className="mt-6 ml-4 bg-green-600 hover:bg-green-500 text-white font-bold py-3 px-6 rounded-full shadow-lg transition-all duration-300 ease-in-out text-lg"
           >
             Conectar con Spotify
+          </button>
+        )}
+
+        {token && (
+          <button
+            onClick={handleLogout}
+            className="mt-6 ml-4 bg-red-600 hover:bg-red-500 text-white font-bold py-3 px-6 rounded-full shadow-lg transition-all duration-300 ease-in-out text-lg"
+          >
+            Desconectar Spotify
           </button>
         )}
       </div>
@@ -96,9 +103,12 @@ export default function Home() {
             </p>
           </div>
           <Carousel />
-          {/* Resto de contenido */}
         </>
       )}
+
+      {token && <SpotifyPlayer />}
+
+      <HeartWithFirework />
     </main>
   );
 }
