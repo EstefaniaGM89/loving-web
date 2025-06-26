@@ -5,7 +5,11 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      animationDelay: {
+        200: '200ms',
+      },
+    },
   },
   plugins: [],
 }

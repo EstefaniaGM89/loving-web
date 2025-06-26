@@ -205,7 +205,7 @@ export default function Home() {
               </div>
 
               {/* Miguel */}
-              <div className="relative w-14 animate-bounce animation-delay-200">
+              <div className="relative w-14 animate-bounce">
                 {/* cabeza */}
                 <div className="relative w-14 h-14 bg-blue-200 rounded-sm flex flex-col items-center justify-center z-10">
                   {/* flequillo negro visible */}
@@ -230,6 +230,7 @@ export default function Home() {
               </div>
             </div>
           </div>
+
 
           {/* Aquí el reproductor Spotify solo cuando showMessage es true y hay token */}
           {token && <SpotifyPlayer />}
