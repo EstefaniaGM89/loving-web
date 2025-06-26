@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 
-export default function HeartWithFirework({ className = "" }: { className?: string }) {
+interface HeartWithFireworkProps {
+  className?: string;
+  animated?: boolean; // Nueva prop para controlar animación y clic
+}
+
+export default function HeartWithFirework({ className = "", animated = true }: HeartWithFireworkProps) {
   const [kiss, setKiss] = useState(false);
 
   useEffect(() => {
@@ -10,6 +15,16 @@ export default function HeartWithFirework({ className = "" }: { className?: stri
     }
   }, [kiss]);
 
+  if (!animated) {
+    // Corazón estático sin botón ni animación
+    return (
+      <div className={`relative inline-block ${className}`}>
+        <span className="text-5xl select-none">💖</span>
+      </div>
+    );
+  }
+
+  // Corazón animado y clicable
   return (
     <div className={`relative inline-block ${className}`}>
       <button
@@ -29,4 +44,3 @@ export default function HeartWithFirework({ className = "" }: { className?: stri
     </div>
   );
 }
-
