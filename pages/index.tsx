@@ -50,7 +50,7 @@ export default function Home() {
     return () => clearInterval(interval);
   }, []);
 
-  // Si quieres condicionar mostrar botón Spotify solo cuando no hay token
+  // Solo mostrar botón Spotify si no hay token guardado
   const token = typeof window !== "undefined" ? localStorage.getItem("spotify_access_token") : null;
 
   return (
@@ -79,7 +79,7 @@ export default function Home() {
         {!token && (
           <button
             onClick={() => (window.location.href = getSpotifyAuthUrl())}
-            className="mt-6 bg-green-600 hover:bg-green-500 text-white font-bold py-3 px-6 rounded-full shadow-lg transition-all duration-300 ease-in-out text-lg"
+            className="ml-4 mt-8 bg-green-600 hover:bg-green-500 text-white font-bold py-3 px-6 rounded-full shadow-lg transition-all duration-300 ease-in-out text-lg"
           >
             Conectar con Spotify
           </button>
@@ -96,8 +96,7 @@ export default function Home() {
             </p>
           </div>
           <Carousel />
-          {/* Cronómetro, compatibilidad y personajes abajo... (igual que antes) */}
-          {/* Aquí puedes dejar el resto de tu código igual */}
+          {/* Resto de contenido */}
         </>
       )}
     </main>
