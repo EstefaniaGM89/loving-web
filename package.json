@@ -7,9 +7,16 @@
     "start": "next start"
   },
   "dependencies": {
+    "@react-three/drei": "^10.4.2",
+    "@react-three/fiber": "^9.1.4",
+    "framer-motion": "^12.22.0",
+    "lamina": "^1.2.2",
+    "maath": "^0.10.8",
     "next": "latest",
     "react": "latest",
-    "react-dom": "latest"
+    "react-bits": "^1.0.5",
+    "react-dom": "latest",
+    "three": "^0.178.0"
   },
   "devDependencies": {
     "@types/node": "24.0.4",

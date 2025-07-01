@@ -1,0 +1,194 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Poppins', sans-serif;
+  }
+}
+
+@layer utilities {
+  .animate-fade-in {
+    @apply opacity-0 animate-[fadeIn_0.8s_ease-in-out_forwards];
+  }
+
+  .animate-firework {
+    animation: firework 0.8s ease-out forwards;
+  }
+
+  .animate-float-up {
+    animation: floatUp 1.2s ease-in-out forwards;
+  }
+
+  .cursor-blink {
+    animation: blinkCursor 1s step-start infinite;
+  }
+}
+
+/* Animaciones personalizadas */
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes firework {
+  0% {
+    opacity: 1;
+    transform: scale(1) translate(0px);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(2) translate(60px);
+  }
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-80px) scale(1.2);
+    opacity: 0;
+  }
+}
+
+@keyframes blinkCursor {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes shine {
+  0% {
+    transform: translateX(-100%) rotate(25deg);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(200%) rotate(25deg);
+    opacity: 0;
+  }
+}
+
+.animate-shine {
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.5) 50%,
+    rgba(255, 255, 255, 0.1) 100%
+  );
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 150%;
+  height: 100%;
+  transform: skewX(-20deg);
+  animation: shine 2s ease-in-out infinite;
+}
+
+.group-hover\:paused:hover {
+  animation-play-state: paused;
+}
+
+@keyframes sparkle {
+  0%, 100% {
+    filter: drop-shadow(0 0 0px hotpink);
+  }
+  50% {
+    filter: drop-shadow(0 0 6px fuchsia) drop-shadow(0 0 12px gold);
+  }
+}
+
+.glitch {
+  position: relative;
+  color: white;
+  font-weight: bold;
+}
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  color: #f0f;
+  z-index: -1;
+}
+.glitch::before {
+  left: 2px;
+  text-shadow: -1px 0 red;
+  clip: rect(2px, 9999px, 8px, 0);
+}
+.glitch::after {
+  left: -2px;
+  text-shadow: -1px 0 blue;
+  clip: rect(10px, 9999px, 20px, 0);
+}
+.glitch-animate {
+  animation: glitch 1s infinite linear alternate-reverse;
+}
+@keyframes glitch {
+  0% {
+    clip-path: inset(10% 0 80% 0);
+    transform: translate(0.5px, -0.5px);
+  }
+  20% {
+    clip-path: inset(20% 0 60% 0);
+    transform: translate(-0.5px, 0.5px);
+  }
+  40% {
+    clip-path: inset(30% 0 40% 0);
+    transform: translate(0.5px, 0.5px);
+  }
+  60% {
+    clip-path: inset(40% 0 30% 0);
+    transform: translate(-0.5px, -0.5px);
+  }
+  80% {
+    clip-path: inset(60% 0 20% 0);
+    transform: translate(1px, -1px);
+  }
+  100% {
+    clip-path: inset(70% 0 10% 0);
+    transform: translate(0px, 0px);
+  }
+}
+
+@keyframes fade-in-down {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-down {
+  animation: fade-in-down 1s ease-out both;
+}
+
+@keyframes flicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+    opacity: 1;
+  }
+  20%, 22%, 24%, 55% {
+    opacity: 0.85;
+  }
+}
+
+.flicker {
+  animation: flicker 2s infinite;
+}
